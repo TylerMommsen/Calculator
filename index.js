@@ -1,7 +1,7 @@
 function add(num1, num2) {
-    let intNum1 = parseInt(num1);
-    let intNum2 = parseInt(num2);
-    return parseInt(intNum1 + intNum2);
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    return num1 + num2;
 }
 
 function subtract(num1, num2) {
@@ -25,19 +25,28 @@ function clear() {
     displayValue.textContent = 0;
 }
 
-// function invertSign(num) {
+function invertSign(num) {
+    return -num;
+}
 
-// }
-
-// function calculatePercent(num) {
-
-// }
+function calculatePercent(num) {
+    return divide(num, 100);
+}
 
 function operate(operator, num1, num2) {
     if (operator == "+") return add(num1, num2);
     if (operator == "-") return subtract(num1, num2);
     if (operator == "/") return divide(num1, num2);
     if (operator == "*") return multiply(num1, num2);
+}
+
+function display(a) {
+    if (!parseInt(a)) { // check if it's an operator
+        displayValue.textContent = a;
+        return;
+    }
+
+    displayValue.textContent = a
 }
 
 function calculate(numbers, operators) {
@@ -74,32 +83,56 @@ buttons.forEach(button => {
     button.addEventListener('click', (e) => {
         if (e.target.classList.contains('operand')) {
             num1 += e.target.textContent;
-            displayValue.textContent = num1;
+            display(num1);
         }
 
         if (e.target.classList.contains('operator')) {
             if (num1 === '') return;
             currentNumbers.push(num1);
             currentOperators.push(e.target.textContent);
-            displayValue.textContent = e.target.textContent;
+            display(e.target.textContent);
             num1 = '';
         }
 
         if (e.target.classList.contains('equals')) {
             currentNumbers.push(num1);
-            console.log(currentNumbers, currentOperators);
             calculatedValue = calculate(currentNumbers, currentOperators);
             clear();
             num1 = ''+calculatedValue;
-            displayValue.textContent = calculatedValue.toFixed(2);
+            display(parseFloat(calculatedValue).toFixed(2));
         }
 
         if (e.target.classList.contains('decimal')) {
-            
+            num1 += '.';
+            display(num1);
         }
 
         if (e.target.classList.contains('clear')) {
             clear();
         }
+
+        if (e.target.classList.contains('sign')) {
+            let inverted = invertSign(num1);
+            num1 = inverted;
+            display(num1);
+        }
+
+        if (e.target.classList.contains('percent')) {
+            let newNum = calculatePercent(num1);
+            num1 = newNum;
+            display(num1);
+        }
     })
 });
+
+displayValue.addEventListener('input', updateDisplayCharacterCount);
+const maxChar = 9;
+
+function updateDisplayCharacterCount() {
+    const content = displayValue.textContent;
+    const remainingCharacters = maxChar - content.length;
+    console.log('called');
+    if (remainingCharacters <= 0) {
+        content.textContent = content.substring(0, maxChar);
+    }
+}

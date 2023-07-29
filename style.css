@@ -27,14 +27,17 @@ body, html {
 
 #display {
     grid-column: 1 / -1;
-    font-size: 5.5em;
+    font-size: 4.7em;
+    align-items: center;
     background-color: rgb(140, 140, 140);
     color: white;
     display: flex;
     justify-content: flex-end;
-    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     margin: 2px;
     border: 0;
+    overflow: hidden;
 }
 
 button {

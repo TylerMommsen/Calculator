@@ -1,21 +1,24 @@
 function add(num1, num2) {
-
+    let intNum1 = parseInt(num1);
+    let intNum2 = parseInt(num2);
+    return parseInt(intNum1 + intNum2);
 }
 
 function subtract(num1, num2) {
-
+    return num1 - num2;
 }
 
 function divide(num1, num2) {
-
+    return num1 / num2;
 }
 
 function multiply(num1, num2) {
-
+    return num1 * num2;
 }
 
 function clear() {
-    currentComputation = [];
+    currentNumbers = [];
+    currentOperators = [];
     num1 = '';
     num2 = '';
     operator = null;
@@ -31,14 +34,31 @@ function clear() {
 // }
 
 function operate(operator, num1, num2) {
-    if (operator == "+") add(num1, num2);
-    if (operator == "-") subtract(num1, num2);
-    if (operator == "/") divide(num1, num2);
-    if (operator == "*") multiply(num1, num2);
+    if (operator == "+") return add(num1, num2);
+    if (operator == "-") return subtract(num1, num2);
+    if (operator == "/") return divide(num1, num2);
+    if (operator == "*") return multiply(num1, num2);
 }
 
-function calculate(arr) {
-    let total = arr[0];
+function calculate(numbers, operators) {
+    let total = numbers[0];
+    let currentOperator = 0
+    for (i = 1; i <= numbers.length; i++) {
+        if (operators[currentOperator] == '+') {
+            total = operate('+', total, numbers[i]); 
+            currentOperator++;
+        } else if (operators[currentOperator] == '-') {
+            total = operate('-', total, numbers[i]); 
+            currentOperator++;
+        } else if (operators[currentOperator] == '/') {
+            total = operate('/', total, numbers[i]); 
+            currentOperator++;
+        } else if (operators[currentOperator] == '*') {
+            total = operate('*', total, numbers[i]); 
+            currentOperator++;
+        }
+    }
+    return total;
 }
 
 let num1 = '';
@@ -58,8 +78,7 @@ buttons.forEach(button => {
         }
 
         if (e.target.classList.contains('operator')) {
-            if (currentComputation.length === 0) return;
-
+            if (num1 === '') return;
             currentNumbers.push(num1);
             currentOperators.push(e.target.textContent);
             displayValue.textContent = e.target.textContent;
@@ -67,7 +86,12 @@ buttons.forEach(button => {
         }
 
         if (e.target.classList.contains('equals')) {
-            calculate(currentComputation);
+            currentNumbers.push(num1);
+            console.log(currentNumbers, currentOperators);
+            calculatedValue = calculate(currentNumbers, currentOperators);
+            clear();
+            num1 = ''+calculatedValue;
+            displayValue.textContent = calculatedValue.toFixed(2);
         }
 
         if (e.target.classList.contains('decimal')) {

@@ -1,0 +1,33 @@
+body, html {
+    background-color: aliceblue;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculator {
+    background-color: rgb(40,40,40);
+    width: 480px;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 6px 12px 6px rgba(0, 0, 0, 0.2), /* Shadow on top edge */
+        6px 0 12px 6px rgba(0, 0, 0, 0.2), /* Shadow on right edge */
+        0 -6px 12px 6px rgba(0, 0, 0, 0.2), /* Shadow on bottom edge */
+        -6px 0 12px 6px rgba(0, 0, 0, 0.2); /* Shadow on left edge */
+}
+
+.inner-container {
+    background-color: black;
+    width: 460px;
+    height: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

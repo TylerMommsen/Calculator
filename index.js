@@ -23,6 +23,7 @@ function clear() {
     num2 = '';
     operator = null;
     displayValue.textContent = 0;
+    hasClickedDecimal = false;
 }
 
 function invertSign(num) {
@@ -41,12 +42,28 @@ function operate(operator, num1, num2) {
 }
 
 function display(a) {
-    if (!parseInt(a)) { // check if it's an operator
+    if (!parseInt(a) && !a.toString().includes('0')) { // check if it's an operator
         displayValue.textContent = a;
         return;
     }
 
-    displayValue.textContent = a
+    let numberString = a.toString();
+    let decimalPart = numberString.split('.')[1];
+    if (decimalPart) {
+        hasClickedDecimal = true;
+    } else {
+        hasClickedDecimal = false;
+    }
+
+    if (decimalPart && decimalPart.length > 9) {
+        displayValue.textContent = parseFloat(a).toFixed(3);
+    } else {
+        if (a.toString().length > 9) {
+            displayValue.textContent = a.toString().slice(0, 9);
+        } else {
+            displayValue.textContent = a;
+        }
+    }
 }
 
 function calculate(numbers, operators) {
@@ -72,10 +89,10 @@ function calculate(numbers, operators) {
 
 let num1 = '';
 let operator = null;
-let num2 = '';
 let displayValue = document.querySelector('#display');
 let currentNumbers = [];
 let currentOperators = [];
+let hasClickedDecimal = false;
 
 const buttons = document.querySelectorAll('button');
 
@@ -88,6 +105,7 @@ buttons.forEach(button => {
 
         if (e.target.classList.contains('operator')) {
             if (num1 === '') return;
+            hasClickedDecimal = false;
             currentNumbers.push(num1);
             currentOperators.push(e.target.textContent);
             display(e.target.textContent);
@@ -99,40 +117,30 @@ buttons.forEach(button => {
             calculatedValue = calculate(currentNumbers, currentOperators);
             clear();
             num1 = ''+calculatedValue;
-            display(parseFloat(calculatedValue).toFixed(2));
+            display(calculatedValue);
         }
 
         if (e.target.classList.contains('decimal')) {
+            if (hasClickedDecimal) return;
+            hasClickedDecimal = true;
             num1 += '.';
             display(num1);
         }
 
-        if (e.target.classList.contains('clear')) {
+        if (e.target.id === ('clear')) {
             clear();
         }
 
-        if (e.target.classList.contains('sign')) {
+        if (e.target.id === ('sign')) {
             let inverted = invertSign(num1);
             num1 = inverted;
             display(num1);
         }
 
-        if (e.target.classList.contains('percent')) {
+        if (e.target.id === ('percent')) {
             let newNum = calculatePercent(num1);
             num1 = newNum;
             display(num1);
         }
     })
 });
-
-displayValue.addEventListener('input', updateDisplayCharacterCount);
-const maxChar = 9;
-
-function updateDisplayCharacterCount() {
-    const content = displayValue.textContent;
-    const remainingCharacters = maxChar - content.length;
-    console.log('called');
-    if (remainingCharacters <= 0) {
-        content.textContent = content.substring(0, maxChar);
-    }
-}

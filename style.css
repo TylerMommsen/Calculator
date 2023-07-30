@@ -60,18 +60,34 @@ button {
     background-color: orange;
 }
 
-.clear {
+.extras {
     background-color: dodgerblue;
-}
-
-.sign {
-    background-color: dodgerblue
-}
-
-.percent {
-    background-color: dodgerblue
 }
 
 #zero {
     grid-column: span 2;
+}
+
+.operator:hover, .equals:hover {
+    background-color: rgb(231, 150, 0);
+}
+
+.operator:active, .equals:active {
+    background-color: rgb(197, 128, 0);
+}
+
+.extras:hover {
+    background-color: rgb(29, 130, 231);
+}
+
+.extras:active {
+    background-color: rgb(28, 122, 216);
+}
+
+.operand:hover, .decimal:hover {
+    background-color: rgb(194, 194, 194);
+}
+
+.operand:active, .decimal:active {
+    background-color: rgb(160, 160, 160);
 }

@@ -15,11 +15,10 @@ body, html {
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: minmax(100px, auto) repeat(5, 80px);
     border: 16px solid black;
+    border-radius: 10px;
     box-shadow: 
-        0 4px 12px 6px rgba(0, 0, 0, 0.1), /* Shadow on top edge */
-        4px 0 12px 6px rgba(0, 0, 0, 0.1), /* Shadow on right edge */
-        0 -4px 12px 6px rgba(0, 0, 0, 0.1), /* Shadow on bottom edge */
-        -4px 0 12px 6px rgba(0, 0, 0, 0.1); /* Shadow on left edge */
+        6px 0 6px 2px rgba(0, 0, 0, 0.2), /* Shadow on right edge */
+        0 6px 6px 2px rgba(0, 0, 0, 0.2); /* Shadow on bottom edge */
     overflow: hidden;
     box-sizing: border-box;
     padding: 5px;
